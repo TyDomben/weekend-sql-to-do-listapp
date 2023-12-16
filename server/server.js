@@ -1,5 +1,5 @@
 // Importing the express module, a Node.js framework for building web applications and APIs.
-const express = require('express');
+const express = require("express");
 
 // Initializing an Express application. This creates an instance of an Express application,
 // which is used to configure the server, set routes, and listen for incoming connections.
@@ -7,7 +7,7 @@ const app = express();
 
 // Requiring the 'todos' router module from the './routes/todos.router.js' file.
 // This module is expected to contain Express routes related to 'todos' functionality.
-const todos = require('./routes/todos.router.js');
+const todos = require("./routes/todos.router.js");
 
 // Defining a variable 'PORT'. The process.env global variable in Node.js is injected
 // by the Node.js runtime and provides a way to access environment variables.
@@ -20,7 +20,7 @@ let PORT = process.env.PORT || 5001;
 // This is a common practice to use a different port for testing environments,
 // allowing for parallel development and testing.
 //  !Do not modify this !
-if (process.env.NODE_ENV == 'test') {
+if (process.env.NODE_ENV == "test") {
   PORT = 5002;
 }
 
@@ -28,7 +28,7 @@ if (process.env.NODE_ENV == 'test') {
 // Here, express.static is a built-in middleware function to serve static files.
 // It's serving files from the 'public' directory (relative to the directory from where the Node.js process is running).
 // Static files are files that clients download as they are from the server. Examples include images, CSS files, and JavaScript files.
-app.use(express.static('./server/public'));
+app.use(express.static("./server/public"));
 
 // Adding middleware to parse JSON. This middleware will parse incoming request bodies in a middleware before handlers,
 // available under the req.body property. It's a built-in middleware function in Express.
@@ -37,13 +37,13 @@ app.use(express.json());
 
 // Mounting the 'todos' router module on the '/todos' path.
 // Any request on the '/todos' route will be passed to the 'todos' router for handling.
-app.use('/todos', todos);
+app.use("/todos", todos);
 
 // Starting the server to listen on the defined PORT.
 // The listen method is used to bind and listen for connections on the specified host and port.
 // This method is an asynchronous operation in Node.js.
-app.listen(PORT, (), => {
+app.listen(PORT, () => {
   // Logging to the console when the server starts listening.
   // This is useful for debugging and to ensure that the server starts correctly.
-  console.log('server running on: ', PORT);
+  console.log("server running on: ", PORT);
 });
