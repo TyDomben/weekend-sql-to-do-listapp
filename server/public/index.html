@@ -30,28 +30,31 @@
 
       <div class="form-container">
         <!-- TODO List Form -->
+        <!-- Form for adding new to-dos -->
         <form id="todoForm">
-          <input type="text" id="nameIn" placeholder="Enter todo" />
-          <input type="checkbox" id="Yes" name="complete" />
-          <label for="Yes">Completed</label>
-          <button type="submit" onclick="addtodo(event)">Add Todo</button>
+          <input
+            type="text"
+            id="nameIn"
+            placeholder="Enter todo"
+            data-testid="toDoTextInput"
+          />
+          <button type="submit" data-testid="submitButton">Add Todo</button>
         </form>
         <!--  -->
-        <!-- TODO List Display Table -->
+        <!-- Table for displaying to-dos -->
         <table>
           <thead>
             <tr>
               <th>Task</th>
               <th>Status</th>
-              <th>Action</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody id="viewtodos"></tbody>
         </table>
-        <!--  -->
       </div>
     </div>
-    <!--  -->
+    <!-- JavaScript files -->
     <script src="./scripts/axios.js"></script>
     <script src="./scripts/client.js"></script>
   </body>

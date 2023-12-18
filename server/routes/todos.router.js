@@ -8,10 +8,8 @@ const pool = require("../modules/pool.js");
 
 // GET
 // initial GET request
-
 router.get("/", (req, res) => {
   let queryText = 'SELECT * FROM "todos";'; //select all from "todos" table
-
   // ! use the pool to send query
   pool
     .query(queryText)
@@ -33,7 +31,6 @@ router.post("/", (req, res) => {
   console.log("req.body", req.body);
 
   const newTodo = req.body;
-  //   newTodo is declared
 
   // Sending data to DB
   // ! Querytext
@@ -60,60 +57,28 @@ router.post("/", (req, res) => {
       res.sendStatus(500);
     });
 });
-// PUT
-router.put("/:id", (req, res) => {
-  let todoId = req.params.id;
-  console.log("todoID", todoId);
-  let queryText;
-  let queryParams = [todoId];
+// PUT route for completing a todo
+router.put("/complete/:id", (req, res) => {
+  const id = req.params.id;
+  const queryText = `UPDATE "todos" SET "isComplete" = TRUE WHERE "id" = $1`;
   pool
-    .query(queryText, queryParams)
-    .then((result) => {
-      res.sendStatus(204);
-    })
-    .catch((error) => {
-      console.log("Woops, error making query: ", queryText);
-      console.error(error);
+    .query(queryText, [id])
+    .then(() => res.sendStatus(200))
+    .catch((err) => {
+      console.error("Error in PUT", err);
       res.sendStatus(500);
     });
 });
-// DELETE
-//
-// Request must include a parameter indicating what book to update - the id
+// DELETE route
 router.delete("/:id", (req, res) => {
-  // Accessing the ID directly from req.params
-  // No need to assign it to another variable like reqId
-  let todoId = req.params.id;
-  console.log("todo id:", todoId);
-
-  // SQL query to delete the book with the specified ID
-  let sqlText = "DELETE FROM todos WHERE id=$1;";
-
-  // Executing the query using the pool object
+  const id = req.params.id;
+  const queryText = `DELETE FROM "todos" WHERE "id" = $1`;
   pool
-    .query(sqlText, [todoId])
-    .then((result) => {
-      console.log("todo ElImInAtEd");
-      res.sendStatus(200); // Send success status
-    })
-    .catch((error) => {
-      console.log(`Error making database query ${sqlText}`, error);
-      res.sendStatus(500); // Send error status if there's a problem
+    .query(queryText, [id])
+    .then(() => res.sendStatus(204))
+    .catch((err) => {
+      console.error("Error in DELETE", err);
+      res.sendStatus(500);
     });
 });
-
 module.exports = router;
-
-// DROP TABLE IF EXISTS "todos";
-
-// CREATE TABLE "todos" (
-// 	"id" SERIAL PRIMARY KEY,
-// 	"text" TEXT,
-// 	"isComplete" BOOLEAN DEFAULT FALSE
-// );
-
-// INSERT INTO "todos"
-//   ("text")
-//   VALUES
-//   ('Build a CRUD app'),
-//   ('Make my app look nice');

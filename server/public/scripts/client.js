@@ -1,58 +1,40 @@
 console.log("JS is sourced!");
-// todo  function list!
-//// GETtodo
-// addtodo
-// clearform
-// savetodo
-// "todo"completed
-// deletetodo
-// append todo to table
-// !
-/**
- * DOM ELEMENTS
- */
+//
 let todoTBody = document.getElementById("viewtodos");
 function gettodos() {
-  // console.log( 'in gettodos' );
-  // axios call to server to get todos
-
+  document.getElementById("todoForm").addEventListener("submit", addtodo);
+  // GET request to retrieve and display todos
   axios({
     method: "GET",
     url: "/todos",
   })
     .then((response) => {
-      // console.log(response.data);
-      // send in the array of objects
       appendstodosToTable(response.data);
-      // appendstodosToTable(todoArray);
     })
     .catch((error) => {
       console.log("whoops, there be an error in here!");
       console.error(error);
     });
-} // ! end gettodos
-
-//! addtodo
+} 
+// Function to handle adding a new todo
 function addtodo(event) {
-  event.preventDefault();
-
-  let todo = {};
-  //!have to match these values
-  todo.text = document.getElementById("nameIn").value;
-  (todo.isComplete = document.getElementById("Yes").checked),
-    //!have to match these values
-    console.log("todo:", todo);
-  savetodo(todo);
-}
+    event.preventDefault();
+    const todoText = document.getElementById("nameIn").value;
+    const newTodo = { text: todoText, isComplete: false };
+  
+    axios.post("/todos", newTodo)
+      .then(() => {
+        gettodos();
+        document.getElementById("nameIn").value = '';
+      })
+      .catch(error => console.error('Error in POST /todos', error));
+  }
 // clearform
-
 function clearForm() {
   document.getElementById("nameIn").value = "";
-  document.getElementById("Yes").checked = false; // Assuming "Yes" is a checkbox
+  document.getElementById("Yes").checked = false; 
 }
-
 //
-
 function savetodo(todoAdded) {
   console.log("We are checking what the inputs are", todoAdded);
 
@@ -71,33 +53,29 @@ function savetodo(todoAdded) {
       alert("Unable to add todo at this time. Please try again later.");
     });
 }
-//
+// Function to mark a todo as complete
 function todoisComplete(event) {
-  console.log("incoming event.target", event.target);
-  console.log(
-    "Getting dataset from component",
-    event.target.closest("tr").dataset.id
-  );
-
+    const id = event.target.closest("tr").dataset.id;
+    axios.put(`/todos/complete/${id}`)
+      .then(() => gettodos())
+      .catch(error => console.error('Error in PUT /todos/complete', error));
+  }
   // Retrieving data that has been stored on an element
-  let todoId = event.target.closest("tr").dataset.id;
-
-  axios
-    .put(`/todos/${todoId}`)
-    .then((response) => {
-      gettodos();
-    })
-    .catch((error) => {
-      console.log("Error", error);
-      alert("Something went wrong");
-    });
-}
+//   let todoId = event.target.closest("tr").dataset.id;
+//   axios
+//     .put(`/todos/${todoId}`)
+//     .then((response) => {
+//       gettodos();
+//     })
+//     .catch((error) => {
+//       console.log("Error", error);
+//       alert("Something went wrong");
+//     });
+// }
 //delete event
-
 function deletetodo(event) {
   const id = event.target.closest("tr").dataset.id;
   console.log("id of row to delete:", id);
-
   axios({
     method: "DELETE",
     url: `/todos/${id}`,
@@ -112,19 +90,21 @@ function deletetodo(event) {
       console.error(error);
     });
 }
-//
-//
-
-function appendstodosToTable(arrayOftodos) {
-  todoTBody.innerHTML = "";
-  for (let todo of arrayOftodos) {
-    todoTBody.innerHTML += `<tr data-id="${todo.id}">
-        <td>${todo.text}</td>
-        <td>${todo.isComplete ? "Complete" : "Incomplete"}</td>
-        <td><button onclick="deletetodo(event)">Delete</button></td>
-        <td><button onclick="todoisComplete(event)">Complete</button></td>
-      </tr>`;
+// Function to append todos to the table
+function appendstodosToTable(todos) {
+    todoTBody.innerHTML = '';
+    todos.forEach(todo => {
+      const todoRow = `
+        <tr data-id="${todo.id}" data-testid="toDoItem" class="${todo.isComplete ? 'completed' : ''}">
+          <td>${todo.text}</td>
+          <td>${todo.isComplete ? 'Complete' : 'Incomplete'}</td>
+          <td>
+            <button onclick="todoisComplete(event)" data-testid="completeButton">Complete</button>
+            <button onclick="deletetodo(event)" data-testid="deleteButton">Delete</button>
+          </td>
+        </tr>`;
+      todoTBody.innerHTML += todoRow;
+    });
   }
-}
+  
 gettodos();
-// savetodo();
