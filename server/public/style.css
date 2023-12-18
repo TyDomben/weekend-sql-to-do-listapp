@@ -1,1 +1,28 @@
 /* "completed" should be applied when a task is completed */
+/*  */
+/* Container for main content */
+.content-container {
+    display: flex;
+    align-items: start; 
+    justify-content: space-between; 
+    gap: 20px; 
+  }
+  /* Styles for the background image */
+  .todo-icon {
+    max-width: 600px; 
+    height: auto;
+    opacity: 0.6; 
+  }
+/* Container for forms and other interactive elements */
+.form-container {
+  /* todo styling */
+}
+/* Background styles for the body */
+body {
+    background-image: url('images/TODO LIST.png');
+    background-size: cover; 
+    background-position: right; 
+    background-position-x: 25px;
+    background-repeat: repeat; 
+  }
+  

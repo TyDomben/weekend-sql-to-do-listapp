@@ -1,52 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-<!--  -->
-  <!-- Favicon Links -->
-  <link rel="icon" type="image/x-icon" href="/todo_favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-  <meta name="msapplication-TileColor" content="#da532c">
-  <meta name="theme-color" content="#ffffff">
-<!-- this is all favicon stuff, and I don't regret a thing. -->
-  <title>SQL TO-DO List</title>
-</head>
-<body>
-  <header>
-    <h1>SQL TO-DO List</h1>
-    <img src="images/TODO LIST.png" class="icon" alt="To-Do List Icon"/>
-    <h1>Remember to drink water.</h1>
-    <h3>Take care of yourself,</h3>
-    <h3>you deserve it.</h3>
-  </header>
-<!--  -->
-  <!-- TODO List Form -->
-  <form id="todoForm">
-    <input type="text" id="nameIn" placeholder="Enter todo"/>
-    <input type="checkbox" id="Yes" name="complete"/>
-    <label for="Yes">Completed</label>
-    <button type="submit" onclick="addtodo(event)">Add Todo</button>
-  </form>
-<!--  -->
-  <!-- TODO List Display Table -->
-  <table>
-    <thead>
-      <tr>
-        <th>Task</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="viewtodos"></tbody>
-  </table>
-<!--  -->
-  <script src="./scripts/axios.js"></script>
-  <script src="./scripts/client.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <!--  -->
+    <!-- Favicon Links -->
+    <link rel="icon" type="image/x-icon" href="/todo_favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+    <!-- this is all favicon stuff, and I don't regret a thing. -->
+    <title>SQL TO-DO List</title>
+  </head>
+  <body>
+    <header>
+      <h1>SQL TO-DO List</h1>
+      <h1>Remember to drink water.</h1>
+      <h3>Take care of yourself,</h3>
+      <h3>you deserve it.</h3>
+    </header>
+    <!--  -->
+    <div class="content-container">
+      <!-- <img src="images/TODO LIST.png" class="todo-icon" alt="To-Do List Icon"/> -->
+
+      <div class="form-container">
+        <!-- TODO List Form -->
+        <form id="todoForm">
+          <input type="text" id="nameIn" placeholder="Enter todo" />
+          <input type="checkbox" id="Yes" name="complete" />
+          <label for="Yes">Completed</label>
+          <button type="submit" onclick="addtodo(event)">Add Todo</button>
+        </form>
+        <!--  -->
+        <!-- TODO List Display Table -->
+        <table>
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="viewtodos"></tbody>
+        </table>
+        <!--  -->
+      </div>
+    </div>
+    <!--  -->
+    <script src="./scripts/axios.js"></script>
+    <script src="./scripts/client.js"></script>
+  </body>
 </html>
